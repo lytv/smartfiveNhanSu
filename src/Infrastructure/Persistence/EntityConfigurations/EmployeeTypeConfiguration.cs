@@ -13,10 +13,24 @@ namespace Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<EmployeeType> builder)
         {
-            builder.Property(u => u.EmployeeTypeId)
+            const string EmployeeTypeId = "43db034a-98cc-42ee-8fff-c5701648dddd";
+            builder.Property(u => u.EmployeeTypeCode)
+                .HasMaxLength(10)
                 .IsRequired();
             builder.Property(u => u.Description)
                 .IsRequired();
+            builder.Property(u => u.TenantId)
+                .IsRequired();
+
+            builder.HasData(
+                new EmployeeType
+                {
+                    Id = Guid.Parse(EmployeeTypeId),
+                    EmployeeTypeCode = "A0000",
+                    Description = "Testing",
+                    TenantId = 1
+                }
+            );
         }
     }
 }

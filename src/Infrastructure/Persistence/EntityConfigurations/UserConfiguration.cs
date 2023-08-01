@@ -11,6 +11,7 @@ namespace Persistence.EntityConfigurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             const string DefaultAdminUserId = "6e5d8fa8-fa96-419f-9c07-3e05b96b087e";
+            DateOnly dateNow = DateOnly.FromDateTime(new DateTime(1900, 1, 1));
 
             builder.Property(u => u.UserName)
                 .HasMaxLength(50)
@@ -27,6 +28,12 @@ namespace Persistence.EntityConfigurations
                 .IsRequired();
             builder.Property(u => u.PasswordSalt)
                 .IsRequired();
+            builder.Property(u => u.TenantId)
+                .IsRequired();
+            builder.Property(u => u.EmployeeCode)
+                .IsRequired();
+            builder.Property(u => u.PhoneNumber)
+                .IsRequired();
 
             var (passwordHash, passwordSalt) = PasswordHelper.CreateHash("159357456qW");
 
@@ -38,9 +45,14 @@ namespace Persistence.EntityConfigurations
                     FirstName = "Default",
                     LastName = "Admin",
                     PasswordHash = passwordHash,
-                    EmailConfirmed=true,
+                    EmailConfirmed = true,
                     PasswordSalt = passwordSalt,
-                    Email = "defaultadmin@gmail.com"
+                    Email = "defaultadmin@gmail.com",
+                    TenantId = 1,
+                    EmployeeCode = "admin",
+                    Birthdate = dateNow,
+                    PhoneNumber = "012345678",
+                    Address = "123 Admin Street"
                 });
         }
     }

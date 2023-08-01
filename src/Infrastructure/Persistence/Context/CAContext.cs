@@ -12,7 +12,7 @@ namespace Persistence.Context
     {
         public CAContext(DbContextOptions<CAContext> options) : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,7 +26,6 @@ namespace Persistence.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
-        public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<EmployeeType> EmployeeTypes { get; set; }
     }

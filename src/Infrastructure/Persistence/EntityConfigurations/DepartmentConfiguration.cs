@@ -13,10 +13,24 @@ namespace Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Department> builder)
         {
-            builder.Property(u => u.DepartmentId)
+            const string DepartmentId = "43db034a-98cc-42ee-8fff-c57016484fdd";
+            builder.Property(u => u.DepartmentCode)
+                .HasMaxLength(10)
                 .IsRequired();
             builder.Property(u => u.Description)
                 .IsRequired();
+            builder.Property(u => u.TenantId)
+                .IsRequired();
+
+            builder.HasData(
+                new Department
+                {
+                    Id = Guid.Parse(DepartmentId),
+                    DepartmentCode = "A000",
+                    Description = "Testing",
+                    TenantId = 1
+                }
+            );
         }
     }
 }

@@ -9,7 +9,8 @@ namespace Domain.Entities
 {
     public class EmployeeType : BaseEntity<Guid>
     {
-        public Guid EmployeeTypeId { get; set; }
+        public string EmployeeTypeCode { get; set; }
         public string Description { get; set; }
+        public int TenantId { get; set; }
     }
 }

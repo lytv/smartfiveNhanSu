@@ -9,7 +9,8 @@ namespace Domain.Entities
 {
     public class Department : BaseEntity<Guid>
     {
-        public Guid DepartmentId { get; set; }
+        public string DepartmentCode { get; set; }
         public string Description { get; set; }
+        public int TenantId { get; set; }
     }
 }
