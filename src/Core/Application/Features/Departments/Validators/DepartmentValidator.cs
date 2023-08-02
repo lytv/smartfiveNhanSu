@@ -16,4 +16,14 @@ namespace Application.Features.Departments.Validators
             RuleFor(x => x.Description).NotEmpty();
         }
     }
+
+    public class UpdateDepartmentValidator : AbstractValidator<UpdateDepartmentCommand>
+    {
+        public UpdateDepartmentValidator()
+        {
+            RuleFor(x => x.Id).NotEmpty();
+            RuleFor(x => x.DepartmentCode).MaximumLength(10).NotEmpty();
+            RuleFor(x => x.Description).NotEmpty();
+        }
+    }
 }

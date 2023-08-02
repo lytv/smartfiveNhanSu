@@ -17,6 +17,7 @@ namespace Application.Features.Departments.Commands
     {
         public string DepartmentCode { get; set; }
         public string Description { get; set; }
+        public int TenantId { get; set; } = 1;
 
         public class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommand, IResponse>
         {
@@ -42,7 +43,8 @@ namespace Application.Features.Departments.Commands
                     .AddAsync(new Department()
                     {
                         DepartmentCode = request.DepartmentCode,
-                        Description = request.Description
+                        Description = request.Description,
+                        TenantId = request.TenantId
                     });
                 await _unitOfWork.SaveChangesAsync();
                 return new DataResponse<Department>(newDepartment, 200);

@@ -34,5 +34,17 @@ namespace WebAPI.Controllers
         {
             return await _mediator.Send(command);
         }
+
+        [HttpPut]
+        public async Task<IResponse> UpdateDepartment(UpdateDepartmentCommand command)
+        {
+            return await _mediator.Send(command);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IResponse> RemoveDepartment(Guid id)
+        {
+            return await _mediator.Send(new RemoveDepartmentCommand(id));
+        }
     }
 }
