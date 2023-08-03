@@ -23,6 +23,7 @@ namespace Persistence
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IEmployeeTypeRepository, EmployeeTypeRepository>();
         }
     }
 }

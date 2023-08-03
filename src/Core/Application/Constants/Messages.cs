@@ -11,6 +11,7 @@
         public static string ConfirmYourEmail => "Please confirm your email";
         public static string EmailIsAlreadyExist => "Email is already exist";
         public static string UsernameIsAlreadyExist => "Username is already exist";
+        public static string EmployeeCodeIsAlreadyExist => "Employee code is already exist";
         public static string PasswordDontMatchWithConfirmation => "Password doesn't match its confirmation";
         public static string RegisterSuccessfully => "Register successfuly please look at your mail box for account confirmation.";
         public static string UserNotFound => "User not found";
@@ -30,5 +31,8 @@
         public static string DepartmentCodeAlreadyExist => "Department Code Already Exist";
         public static string DepartmentNotFound => "Department not found";
         public static string DepartmentDescriptionNotChange => "Department Description is not change";
+        public static string EmployeeTypeCodeAlreadyExist => "EmployeeType Code Already Exist";
+        public static string EmployeeTypeNotFound => "EmployeeType not found";
+        public static string EmployeeTypeDescriptionNotChange => "EmployeeType Description is not change";
     }
 }

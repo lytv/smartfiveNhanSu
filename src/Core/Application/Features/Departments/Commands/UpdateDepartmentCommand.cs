@@ -34,11 +34,8 @@ namespace Application.Features.Departments.Commands
 
             public async Task<IResponse> Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
             {
-                var existDepartment = await _departmentRepository.GetByIdAsync(request.Id);
-                if (existDepartment == null)
-                {
-                    throw new ApiException(404, Messages.DepartmentNotFound);
-                }
+                var existDepartment = await _departmentRepository.GetByIdAsync(request.Id)
+                    ?? throw new ApiException(404, Messages.DepartmentNotFound);
 
                 var existCode = await _departmentRepository.GetAsync(
                     d => d.DepartmentCode == request.DepartmentCode);
@@ -49,9 +46,9 @@ namespace Application.Features.Departments.Commands
                     throw new ApiException(400, Messages.DepartmentCodeAlreadyExist);
                 }
 
-                if(existDepartment.Description == request.Description)
+                if (existDepartment.Description == request.Description)
                 {
-                    throw new ApiException(400, Messages.DepartmentDescriptionNotChange);
+                    throw new ApiException(304, Messages.DepartmentDescriptionNotChange);
                 }
 
                 _mapper.Map(request, existDepartment);

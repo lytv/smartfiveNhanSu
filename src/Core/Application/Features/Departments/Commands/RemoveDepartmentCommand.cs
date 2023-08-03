@@ -34,11 +34,8 @@ namespace Application.Features.Departments.Commands
 
             public async Task<IResponse> Handle(RemoveDepartmentCommand request, CancellationToken cancellationToken)
             {
-                var existDepartment = await _departmentRepository.GetByIdAsync(request.Id);
-                if(existDepartment == null)
-                {
-                    throw new ApiException(404, Messages.DepartmentNotFound);
-                }
+                var existDepartment = await _departmentRepository.GetByIdAsync(request.Id)
+                    ?? throw new ApiException(404, Messages.DepartmentNotFound);
 
                 _departmentRepository.Remove(existDepartment);
                 await _unitOfWork.SaveChangesAsync();

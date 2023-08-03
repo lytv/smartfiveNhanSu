@@ -1,4 +1,6 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.Constants;
+using Application.Exceptions;
+using Application.Interfaces.Repositories;
 using Application.Wrappers.Abstract;
 using Application.Wrappers.Concrete;
 using Domain.Entities;
@@ -31,6 +33,12 @@ namespace Application.Features.Departments.Queries
             public async Task<DataResponse<Department>> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
             {
                 var department = await _departmentRepository.GetByIdAsync(request.Id);
+
+                if (department == null)
+                {
+                    throw new ApiException(404, Messages.NotFound);
+                }
+
                 return new DataResponse<Department>(department, 200);
             }
         }

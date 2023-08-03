@@ -34,6 +34,7 @@ namespace Application.Features.Departments.Commands
             {
                 var existDepartment = await _departmentRepository
                     .GetAsync(d => d.DepartmentCode == request.DepartmentCode);
+
                 if (existDepartment != null) 
                 {
                     throw new ApiException(400, Messages.DepartmentCodeAlreadyExist);
