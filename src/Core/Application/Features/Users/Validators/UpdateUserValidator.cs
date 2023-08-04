@@ -26,6 +26,8 @@ namespace Application.Features.Users.Validators
                 .WithMessage("Your phone number must start with 090");
             RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("Phone number is required");
             RuleFor(x => x.EmployeeCode).NotEmpty().WithMessage("Employee code is required");
+            RuleFor(x => x.DepartmentCode).MaximumLength(10).WithMessage("Department code length must be under 10");
+            RuleFor(x => x.EmployeeTypeCode).MaximumLength(10).WithMessage("Employee type code length must be under 10");
         }
     }
 }

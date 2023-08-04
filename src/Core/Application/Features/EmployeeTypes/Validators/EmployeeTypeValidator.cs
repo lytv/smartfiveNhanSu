@@ -7,8 +7,9 @@ namespace Application.Features.Departments.Validators
     {
         public CreateEmployeeTypeValidator() 
         {
-            RuleFor(x => x.EmployeeTypeCode).MaximumLength(10).NotEmpty();
-            RuleFor(x => x.Description).NotEmpty();
+            RuleFor(x => x.EmployeeTypeCode).NotEmpty().WithMessage("Employee type code is required");
+            RuleFor(x => x.EmployeeTypeCode).MaximumLength(10).WithMessage("Employee type code length must be under 10 ");
+            RuleFor(x => x.Description).NotEmpty().WithMessage("Description is required");
         }
     }
 
@@ -16,9 +17,10 @@ namespace Application.Features.Departments.Validators
     {
         public UpdateEmployeeTypeValidator()
         {
-            RuleFor(x => x.Id).NotEmpty();
-            RuleFor(x => x.EmployeeTypeCode).MaximumLength(10).NotEmpty();
-            RuleFor(x => x.Description).NotEmpty();
+            RuleFor(x => x.Id).NotEmpty().WithMessage("Employee type id is required");
+            RuleFor(x => x.EmployeeTypeCode).NotEmpty().WithMessage("Employee type code is required");
+            RuleFor(x => x.EmployeeTypeCode).MaximumLength(10).WithMessage("Employee type code length must be under 10 ");
+            RuleFor(x => x.Description).NotEmpty().WithMessage("Description is required");
         }
     }
 }

@@ -21,8 +21,8 @@ namespace Application.Features.Users.Commands
         public DateOnly Birthdate { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
-        public string? DepartmentCode { get; set; }
-        public string? EmployeeTypeCode { get; set; }
+        public string DepartmentCode { get; set; }
+        public string EmployeeTypeCode { get; set; }
         public string EmployeeCode { get; set; }
         public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, IResponse>
         {
