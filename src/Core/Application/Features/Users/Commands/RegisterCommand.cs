@@ -21,6 +21,11 @@ namespace Application.Features.Users.Commands
         public string Email { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
+        public DateOnly Birthdate { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
+        public string EmployeeCode { get; set; }
+        public int TenantId { get; set; } = 1;
 
         public class RegisterCommandHandler : IRequestHandler<RegisterCommand, IResponse>
         {
@@ -39,12 +44,19 @@ namespace Application.Features.Users.Commands
 
             public async Task<IResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
             {
-                var existuser = await _userRepository.GetAsync(x => x.UserName == request.UserName || x.Email == request.Email, noTracking: true);
+                var existuser = await _userRepository.GetAsync(
+                    x => x.UserName == request.UserName
+                    || x.Email == request.Email
+                    || x.EmployeeCode == request.EmployeeCode
+                    , noTracking: true);
                 if (existuser?.UserName == request.UserName)
                     throw new ApiException(400, Messages.UsernameIsAlreadyExist);
 
                 if (existuser?.Email == request.Email)
                     throw new ApiException(400, Messages.EmailIsAlreadyExist);
+
+                if (existuser?.EmployeeCode == request.EmployeeCode)
+                    throw new ApiException(400, Messages.EmployeeCodeIsAlreadyExist);
 
                 var (passwordHash, passwordSalt) = PasswordHelper.CreateHash(request.Password);
                 var user = _mapper.Map<User>(request);

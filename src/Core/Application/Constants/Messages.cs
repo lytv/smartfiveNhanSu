@@ -6,7 +6,6 @@
         public static string UpdatedSuccessfully => "Updated Successfully";
         public static string DeletedSuccessfully => "Deleted Successfully";
         public static string NotFound => "Entity not found";
-
         public static string UserNameOrPasswordIsIncorrect => "Username or password is incorrect";
         public static string ConfirmYourEmail => "Please confirm your email";
         public static string EmailIsAlreadyExist => "Email is already exist";

@@ -19,6 +19,17 @@ namespace Application.Features.Users.Validators
                     .Matches(@"[a-z]+").WithMessage("Your password must contain at least one lowercase letter.")
                     .Matches(@"[0-9]+").WithMessage("Your password must contain at least one number.");
             RuleFor(x => x.ConfirmPassword).NotEmpty().WithMessage("Confirm password is required").Equal(x => x.Password).WithMessage("Password and ConfirmPassword must match");
+            RuleFor(x => x.Birthdate)
+                .GreaterThan(DateOnly.FromDateTime(new DateTime(1900, 1, 1)))
+                .WithMessage("Your Birthday have to be greater than 01/01/1900");
+            RuleFor(x => x.Birthdate)
+            .LessThan(DateOnly.FromDateTime(DateTime.Now))
+            .WithMessage("Your Birthday have to be less than " + DateTime.Now);
+            RuleFor(x => x.PhoneNumber)
+                .Matches(@"^090[0-9]{6,7}$")
+                .WithMessage("Your phone number must start with 090");
+            RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("Phone number is required");
+            RuleFor(x => x.EmployeeCode).NotEmpty().WithMessage("Employee code is required");
         }
     }
 }
