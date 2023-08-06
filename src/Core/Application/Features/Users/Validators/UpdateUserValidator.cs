@@ -1,4 +1,5 @@
-﻿using Application.Features.Users.Commands;
+﻿using Application.Constants;
+using Application.Features.Users.Commands;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -22,12 +23,12 @@ namespace Application.Features.Users.Validators
             .LessThan(DateOnly.FromDateTime(DateTime.Now))
             .WithMessage("Your Birthday have to be less than " + DateTime.Now);
             RuleFor(x => x.PhoneNumber)
-                .Matches(@"^090[0-9]{6,7}$")
+                .Matches(ValidatorConsts.LeadingPhoneNumberRegex)
                 .WithMessage("Your phone number must start with 090");
             RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("Phone number is required");
             RuleFor(x => x.EmployeeCode).NotEmpty().WithMessage("Employee code is required");
-            RuleFor(x => x.DepartmentCode).MaximumLength(10).WithMessage("Department code length must be under 10");
-            RuleFor(x => x.EmployeeTypeCode).MaximumLength(10).WithMessage("Employee type code length must be under 10");
+            RuleFor(x => x.DepartmentCode).MaximumLength(ValidatorConsts.MaximumCodeLength).WithMessage($"Department code length must be under {ValidatorConsts.MaximumCodeLength}");
+            RuleFor(x => x.EmployeeTypeCode).MaximumLength(ValidatorConsts.MaximumCodeLength).WithMessage($"Employee type code length must be under {ValidatorConsts.MaximumCodeLength}");
         }
     }
 }

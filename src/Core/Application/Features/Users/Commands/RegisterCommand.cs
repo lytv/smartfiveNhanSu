@@ -25,18 +25,31 @@ namespace Application.Features.Users.Commands
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string EmployeeCode { get; set; }
+        public string? DepartmentCode { get; set; }
+        public string? EmployeeTypeCode { get; set; }
         public int TenantId { get; set; } = 1;
 
         public class RegisterCommandHandler : IRequestHandler<RegisterCommand, IResponse>
         {
             private readonly IUserRepository _userRepository;
+            private readonly IDepartmentRepository _departmentRepository;
+            private readonly IEmployeeTypeRepository _employeeTypeRepository;
             private readonly IUnitOfWork _unitOfWork;
             private readonly IEmailService _emailService;
             private readonly IMapper _mapper;
 
-            public RegisterCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork, IEmailService emailService, IMapper mapper)
+            public RegisterCommandHandler(
+                IUserRepository userRepository,
+                IDepartmentRepository departmentRepository,
+                IEmployeeTypeRepository employeeTypeRepository,
+                IUnitOfWork unitOfWork,
+                IEmailService emailService,
+                IMapper mapper
+                )
             {
                 _userRepository = userRepository;
+                _departmentRepository = departmentRepository;
+                _employeeTypeRepository = employeeTypeRepository;
                 _unitOfWork = unitOfWork;
                 _emailService = emailService;
                 _mapper = mapper;
@@ -57,9 +70,24 @@ namespace Application.Features.Users.Commands
 
                 if (existuser?.EmployeeCode == request.EmployeeCode)
                     throw new ApiException(400, Messages.EmployeeCodeIsAlreadyExist);
+                
+                var user = _mapper.Map<User>(request);
+
+                if (request.DepartmentCode != null)
+                {
+                    var department = await _departmentRepository.GetAsync(d => d.DepartmentCode == request.DepartmentCode)
+                        ?? throw new ApiException(400, Messages.DepartmentNotFound);
+                    user.Department = department;
+                }
+
+                if (request.EmployeeTypeCode != null)
+                {
+                    var employeeType = await _employeeTypeRepository.GetAsync(e => e.EmployeeTypeCode == request.EmployeeTypeCode)
+                        ?? throw new ApiException(400, Messages.EmployeeTypeNotFound);
+                    user.EmployeeType = employeeType;
+                }
 
                 var (passwordHash, passwordSalt) = PasswordHelper.CreateHash(request.Password);
-                var user = _mapper.Map<User>(request);
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
                 user.EmailConfirmationCode = PasswordHelper.GenerateRandomString(20);

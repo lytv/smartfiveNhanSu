@@ -48,7 +48,7 @@ namespace Application.Features.Departments.Commands
                         TenantId = request.TenantId
                     });
                 await _unitOfWork.SaveChangesAsync();
-                return new DataResponse<Department>(newDepartment, 200);
+                return new SuccessResponse(200, Messages.RegisterSuccessfully);
             }
         }
     }

@@ -47,7 +47,7 @@ namespace Application.Features.EmployeeTypes.Commands
                         TenantId = request.TenantId
                     });
                 await _unitOfWork.SaveChangesAsync();
-                return new DataResponse<EmployeeType>(newEmployeeType, 200);
+                return new SuccessResponse(200, Messages.RegisterSuccessfully);
             }
         }
     }

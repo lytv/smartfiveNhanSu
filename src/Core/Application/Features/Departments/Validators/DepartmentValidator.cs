@@ -1,4 +1,5 @@
-﻿using Application.Features.Departments.Commands;
+﻿using Application.Constants;
+using Application.Features.Departments.Commands;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Application.Features.Departments.Validators
         public CreateDepartmentValidator() 
         {
             RuleFor(x => x.DepartmentCode).NotEmpty().WithMessage("Department code is required");
-            RuleFor(x => x.DepartmentCode).MaximumLength(10).WithMessage("Department code length must be under 10 ");
+            RuleFor(x => x.DepartmentCode).MaximumLength(ValidatorConsts.MaximumCodeLength).WithMessage($"Department code length must be under {ValidatorConsts.MaximumCodeLength}.");
             RuleFor(x => x.Description).NotEmpty().WithMessage("Description is required");
         }
     }
@@ -24,7 +25,7 @@ namespace Application.Features.Departments.Validators
         {
             RuleFor(x => x.Id).NotEmpty().WithMessage("Department id is required");
             RuleFor(x => x.DepartmentCode).NotEmpty().WithMessage("Department code is required");
-            RuleFor(x => x.DepartmentCode).MaximumLength(10).WithMessage("Department code length must be under 10 ");
+            RuleFor(x => x.DepartmentCode).MaximumLength(ValidatorConsts.MaximumCodeLength).WithMessage($"Department code length must be under {ValidatorConsts.MaximumCodeLength}.");
             RuleFor(x => x.Description).NotEmpty().WithMessage("Description is required");
         }
     }
