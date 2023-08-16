@@ -33,5 +33,9 @@
         public static string EmployeeTypeCodeAlreadyExist => "EmployeeType Code Already Exist";
         public static string EmployeeTypeNotFound => "EmployeeType not found";
         public static string EmployeeTypeDescriptionNotChange => "EmployeeType Description is not change";
+        public static string FileEmpty => "formfile is empty.";
+        public static string NotSupportFile => "Not Support file extension.";
+        public static string ImportExcelSuccessfully => "Data imported successfully.";
+
     }
 }

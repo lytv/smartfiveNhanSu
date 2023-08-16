@@ -25,8 +25,8 @@ namespace Application.Features.Users.Commands
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string EmployeeCode { get; set; }
-        public string? DepartmentCode { get; set; }
-        public string? EmployeeTypeCode { get; set; }
+        public string DepartmentCode { get; set; }
+        public string EmployeeTypeCode { get; set; }
         public int TenantId { get; set; } = 1;
 
         public class RegisterCommandHandler : IRequestHandler<RegisterCommand, IResponse>

@@ -1,9 +1,12 @@
 ﻿using Application.Features.Users.Commands;
 using Application.Features.Users.Queries;
+using Application.Interfaces.Repositories;
 using Application.Wrappers.Abstract;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
+using Persistence.Repositories;
 
 namespace WebAPI.Controllers
 {
@@ -12,10 +15,14 @@ namespace WebAPI.Controllers
     public class UsersController : BaseController
     {
         private readonly IMediator _mediator;
+        private readonly IUserRepository _userRepository;
 
-        public UsersController(IMediator mediator)
+
+        public UsersController(IMediator mediator, IUserRepository userRepository)
         {
             _mediator = mediator;
+            _userRepository = userRepository;
+
         }
 
         [Authorize(Roles ="Admin")]
@@ -83,5 +90,33 @@ namespace WebAPI.Controllers
             return await _mediator.Send(new RemoveUserCommand(userid));
         }
 
+        [HttpPost("importexcel")]
+        public async Task<IResponse> ImportExcel([FromForm] ImportExcelCommand command)
+        {
+
+            return await _mediator.Send(command);
+        }
+
+        [HttpGet("exportexcel")]
+        public async Task<IActionResult> ExportExcel()
+        {
+
+            var list = await _userRepository.GetAllAsync();
+            var stream = new MemoryStream();
+
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("Sheet1");
+                workSheet.Cells.LoadFromCollection(list, true);
+                package.Save();
+            }
+
+            stream.Position = 0;
+            string excelName = $"UserList-{System.DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+
+            string fileDownloadName = excelName;
+
+            return File(stream, "application/octet-stream", fileDownloadName);
+        }
     }
 }
