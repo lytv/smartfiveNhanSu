@@ -9,6 +9,7 @@ using Persistence;
 using Persistence.Context;
 using Serilog;
 using Serilog.Sinks.PostgreSQL;
+using DateOnlyTimeOnly.AspNet;
 using WebAPI.Infrastructure.Extensions;
 using WebAPI.Infrastructure.Filters;
 
@@ -19,7 +20,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add(typeof(ValidationFilter));
-}).AddFluentValidation();
+    options.UseDateOnlyTimeOnlyStringConverters();
+}).AddFluentValidation().AddJsonOptions(options =>
+{
+    options.UseDateOnlyTimeOnlyStringConverters();
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
@@ -49,6 +55,7 @@ builder.Services.AddSwaggerGen(c =>
                         new string[] {}
                     }
                 });
+    c.UseDateOnlyTimeOnlyStringConverters();
 });
 builder.Services.ConfigureAuth(builder.Configuration);
 builder.Services.Configure<ApiBehaviorOptions>(options =>

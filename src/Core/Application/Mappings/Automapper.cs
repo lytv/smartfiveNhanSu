@@ -1,4 +1,6 @@
 ﻿using Application.Dtos;
+using Application.Features.Departments.Commands;
+using Application.Features.EmployeeTypes.Commands;
 using Application.Features.Roles.Commands;
 using Application.Features.Users.Commands;
 using AutoMapper;
@@ -20,6 +22,8 @@ namespace Application.Mappings
             CreateMap<User, RegisterCommand>().ReverseMap();
             CreateMap<Role, UpdateRoleCommand>().ReverseMap();
             CreateMap<Role, RoleDTO>().ReverseMap();
+            CreateMap<UpdateDepartmentCommand, Department>().ReverseMap();
+            CreateMap<UpdateEmployeeTypeCommand, EmployeeType>().ReverseMap();
         }
     }
 }

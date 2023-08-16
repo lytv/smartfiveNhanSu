@@ -6,11 +6,11 @@
         public static string UpdatedSuccessfully => "Updated Successfully";
         public static string DeletedSuccessfully => "Deleted Successfully";
         public static string NotFound => "Entity not found";
-
         public static string UserNameOrPasswordIsIncorrect => "Username or password is incorrect";
         public static string ConfirmYourEmail => "Please confirm your email";
         public static string EmailIsAlreadyExist => "Email is already exist";
         public static string UsernameIsAlreadyExist => "Username is already exist";
+        public static string EmployeeCodeIsAlreadyExist => "Employee code is already exist";
         public static string PasswordDontMatchWithConfirmation => "Password doesn't match its confirmation";
         public static string RegisterSuccessfully => "Register successfuly please look at your mail box for account confirmation.";
         public static string UserNotFound => "User not found";
@@ -27,5 +27,15 @@
         public static string PasswordSuccessfullyReset => "Your password has been successfully reset.Your new password has been sent to your email address.We recommend that you change your password.";
         public static string ResetPasswordCodeInvalid => "Your Reset Password Code is invalid";
         public static string EmailSuccessfullyChangedConfirmYourEmail => "Email Successfully Changed.Please confirm your email";
+        public static string DepartmentCodeAlreadyExist => "Department Code Already Exist";
+        public static string DepartmentNotFound => "Department not found";
+        public static string DepartmentDescriptionNotChange => "Department Description is not change";
+        public static string EmployeeTypeCodeAlreadyExist => "EmployeeType Code Already Exist";
+        public static string EmployeeTypeNotFound => "EmployeeType not found";
+        public static string EmployeeTypeDescriptionNotChange => "EmployeeType Description is not change";
+        public static string FileEmpty => "formfile is empty.";
+        public static string NotSupportFile => "Not Support file extension.";
+        public static string ImportExcelSuccessfully => "Data imported successfully.";
+
     }
 }

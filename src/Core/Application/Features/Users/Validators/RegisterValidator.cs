@@ -1,4 +1,5 @@
-﻿using Application.Features.Users.Commands;
+﻿using Application.Constants;
+using Application.Features.Users.Commands;
 using FluentValidation;
 
 namespace Application.Features.Users.Validators
@@ -19,6 +20,19 @@ namespace Application.Features.Users.Validators
                     .Matches(@"[a-z]+").WithMessage("Your password must contain at least one lowercase letter.")
                     .Matches(@"[0-9]+").WithMessage("Your password must contain at least one number.");
             RuleFor(x => x.ConfirmPassword).NotEmpty().WithMessage("Confirm password is required").Equal(x => x.Password).WithMessage("Password and ConfirmPassword must match");
+            RuleFor(x => x.Birthdate)
+                .GreaterThan(DateOnly.FromDateTime(new DateTime(1900, 1, 1)))
+                .WithMessage("Your Birthday have to be greater than 01/01/1900");
+            RuleFor(x => x.Birthdate)
+            .LessThan(DateOnly.FromDateTime(DateTime.Now))
+            .WithMessage("Your Birthday have to be less than " + DateTime.Now.Year);
+            RuleFor(x => x.PhoneNumber)
+                .Matches(ValidatorConsts.LeadingPhoneNumberRegex)
+                .WithMessage($"Your phone number must start with 090");
+            RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("Phone number is required");
+            RuleFor(x => x.EmployeeCode).NotEmpty().WithMessage("Employee code is required");
+            RuleFor(x => x.DepartmentCode).MaximumLength(ValidatorConsts.MaximumCodeLength).WithMessage($"Department code length must not exceed {ValidatorConsts.MaximumCodeLength}.");
+            RuleFor(x => x.EmployeeTypeCode).MaximumLength(ValidatorConsts.MaximumCodeLength).WithMessage($"Employee type code length must not exceed {ValidatorConsts.MaximumCodeLength}.");
         }
     }
 }
