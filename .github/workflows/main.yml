@@ -27,7 +27,7 @@ jobs:
     - name: Set up JDK 11 (if needed for your project)
       uses: actions/setup-java@v1
       with:
-        java-version: 11
+        java-version: 11  # Ensure this version meets SonarScanner requirements
     - name: Cache SonarCloud packages
       uses: actions/cache@v1
       with:
@@ -50,12 +50,12 @@ jobs:
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
-      shell: powershell
-      run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"medidata" /o:"kms-medidata" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"
-        dotnet build --no-restore D:\a\smartfiveNhanSu\smartfiveNhanSu\Clean-Onion_Architecture.sln
-        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}"
+        SONAR_TOKEN: <span class="math-inline">\{\{ secrets\.SONAR\_TOKEN\_KMS \}\}
+shell\: powershell
+run\: \|
+\.\\\.sonar\\scanner\\dotnet\-sonarscanner begin /k\:"medidata" /o\:"kms\-medidata" /d\:sonar\.login\="</span>{{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="<span class="math-inline">\{\{ secrets\.SONAR\_HOST\_URL\_KMS \}\}"
+dotnet build \-\-no\-restore D\:\\a\\smartfiveNhanSu\\smartfiveNhanSu\\Clean\-Onion\_Architecture\.sln
+\.\\\.sonar\\scanner\\dotnet\-sonarscanner end /d\:sonar\.login\="</span>{{ secrets.SONAR_TOKEN_KMS }}"
     - name: Build (optional)
       run: dotnet build --no-restore D:\a\smartfiveNhanSu\smartfiveNhanSu\Clean-Onion_Architecture.sln
     - name: SonarScanner for .NET 6
@@ -73,9 +73,4 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: dotnet-tests-report (optional)
-      uses: zyborg/dotnet-tests-report@v1.3.0
-      with:
-        project_path: Tests
-        report_name: tests
-        report_title: Tests
-        github_token: ${{ secrets.SONAR_TOKEN }}
+      uses: zyborg/dotnet-tests-report@v1.
