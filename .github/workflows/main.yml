@@ -54,7 +54,7 @@ jobs:
       shell: powershell
       run: |
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"medidata" /o:"kms-medidata" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"
-        dotnet build --no-restore
+        dotnet build --no-restore D:\a\smartfiveNhanSu\smartfiveNhanSu\Clean-Onion_Architecture.sln
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}"
     - name: Build (optional)
       run: dotnet build --no-restore D:\a\smartfiveNhanSu\smartfiveNhanSu\Clean-Onion_Architecture.sln
