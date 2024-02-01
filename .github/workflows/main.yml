@@ -61,7 +61,7 @@ jobs:
     - name: SonarScanner for .NET 6
       uses: sonarsource/sonarcloud-github-action@master
       with:
-        projectKey: medidata
+        projectKey: testkmsscan
         organization: kms-medidata
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
