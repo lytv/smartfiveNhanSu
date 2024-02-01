@@ -2,9 +2,9 @@ name: .NET
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
@@ -15,25 +15,31 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
     - name: List files and directories
       run: ls
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.101
+        dotnet-version: 6.0.100
+
     - name: Restore dependencies
       run: dotnet restore D:\a\smartfiveNhanSu\smartfiveNhanSu\Clean-Onion_Architecture.sln 
       working-directory: D:\a\smartfiveNhanSu\smartfiveNhanSu
+
     - name: Set up JDK 11
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
+
     - name: Cache SonarCloud packages
       uses: actions/cache@v1
       with:
         path: ~\sonar\cache
         key: ${{ runner.os }}-sonar
         restore-keys: ${{ runner.os }}-sonar
+
     - name: Cache SonarCloud scanner
       id: cache-sonar-scanner
       uses: actions/cache@v1
@@ -41,42 +47,38 @@ jobs:
         path: .\.sonar\scanner
         key: ${{ runner.os }}-sonar-scanner
         restore-keys: ${{ runner.os }}-sonar-scanner
-    - name: Install SonarCloud scanner
+
+    - name: Install SonarScanner for MSBuild
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
       shell: powershell
       run: |
         New-Item -Path .\.sonar\scanner -ItemType Directory
-        dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-    - name: Build and analyze
+        Invoke-WebRequest -Uri https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.3.1.3674/sonar-scanner-msbuild-5.3.1.3674-net6.0.zip -OutFile .\.sonar\scanner\sonar-scanner-msbuild.zip
+        Add-Type -AssemblyName System.IO.Compression.FileSystem
+        [System.IO.Compression.ZipFile]::ExtractToDirectory('.\.sonar\scanner\sonar-scanner-msbuild.zip', '.\.sonar\scanner')
+
+    - name: Build and analyze with SonarScanner for MSBuild
       env:
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"medidata" /o:"kms-medidata" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"
-        dotnet build --no-restore
-        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}"
-    - name: Build
-      run: dotnet build --no-restore D:\a\smartfiveNhanSu\smartfiveNhanSu\Clean-Onion_Architecture.sln
-    - name: SonarScanner for .NET 5 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@2.0
-      with:
-        sonarProjectKey: testkmsscan
-        sonarProjectName:  testkmsscan
-        sonarOrganization: kms-medidata
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
-        GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        .\.sonar\scanner\sonar-scanner-msbuild-5.3.1.3674-net6.0\SonarScanner.MSBuild.exe begin /k:"medidata" /o:"kms-medidata" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"
+        dotnet build --configuration Release
+        .\.sonar\scanner\sonar-scanner-msbuild-5.3.1.3674-net6.0\SonarScanner.MSBuild.exe end /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}"
+
     - name: CodeCov
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
+
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
     - name: dotnet-tests-report
       uses: zyborg/dotnet-tests-report@v1.3.0
       with:
-        project_path: Tests          
+        project_path: Tests
         report_name: tests
         report_title: Tests
         github_token: ${{ secrets.SONAR_TOKEN }}
