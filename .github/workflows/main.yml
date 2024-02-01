@@ -17,14 +17,14 @@ jobs:
         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
     - name: List files and directories
       run: ls
-    - name: Setup .NET 4.6
+    - name: Setup .NET 6
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 4.6.x
+        dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore D:\a\smartfiveNhanSu\smartfiveNhanSu\Clean-Onion_Architecture.sln
       working-directory: D:\a\smartfiveNhanSu\smartfiveNhanSu
-    - name: Set up JDK 11
+    - name: Set up JDK 11 (if needed for your project)
       uses: actions/setup-java@v1
       with:
         java-version: 11
@@ -56,9 +56,9 @@ jobs:
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"medidata" /o:"kms-medidata" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"
         dotnet build --no-restore
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}"
-    - name: Build
+    - name: Build (optional)
       run: dotnet build --no-restore D:\a\smartfiveNhanSu\smartfiveNhanSu\Clean-Onion_Architecture.sln
-    - name: SonarScanner for .NET 4.6
+    - name: SonarScanner for .NET 6
       uses: sonarsource/sonarcloud-github-action@master
       with:
         projectKey: testkmsscan
@@ -66,13 +66,13 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    - name: CodeCov
+    - name: CodeCov (optional)
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: dotnet-tests-report
+    - name: dotnet-tests-report (optional)
       uses: zyborg/dotnet-tests-report@v1.3.0
       with:
         project_path: Tests
