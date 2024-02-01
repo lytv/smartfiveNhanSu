@@ -22,8 +22,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore D:\a\smartfiveNhanSu\smartfiveNhanSu\Clean-Onion_Architecture.sln
-      working-directory: D:\a\smartfiveNhanSu\smartfiveNhanSu
+      run: dotnet restore D:/a/smartfiveNhanSu/smartfiveNhanSu/Clean-Onion_Architecture.sln
+      working-directory: D:/a/smartfiveNhanSu/smartfiveNhanSu
     - name: Set up JDK 11 (if needed for your project)
       uses: actions/setup-java@v3
       with:
@@ -55,10 +55,10 @@ jobs:
       shell: powershell
       run: |
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"medidata" /o:"kms-medidata" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"
-        dotnet build --no-restore D:\a\smartfiveNhanSu\smartfiveNhanSu\Clean-Onion_Architecture.sln
+        dotnet build --no-restore D:/a/smartfiveNhanSu/smartfiveNhanSu/Clean-Onion_Architecture.sln
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}"
     - name: Build (optional)
-      run: dotnet build --no-restore D:\a\smartfiveNhanSu\smartfiveNhanSu\Clean-Onion_Architecture.sln
+      run: dotnet build --no-restore D:/a/smartfiveNhanSu/smartfiveNhanSu/Clean-Onion_Architecture.sln
     - name: SonarScanner for .NET 6
       uses: sonarsource/sonarcloud-github-action@master
       with:
