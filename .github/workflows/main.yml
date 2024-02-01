@@ -58,24 +58,34 @@ jobs:
 
     - name: Build (optional)
       run: dotnet build --no-restore Clean-Onion_Architecture.sln
-    - name: SonarScanner for .NET 6
-      uses: sonarsource/sonarcloud-github-action@master
+    - name: SonarScanner for .NET 8 with pull request decoration support
+      uses: highbyte/sonarscan-dotnet@v2.3.1
       with:
-        projectKey: medidata
-        organization: kms-medidata
+         # The key of the SonarQube project
+         sonarProjectKey: medidata
+         # The name of the SonarQube project
+         sonarProjectName:  medidata
+         # The name of the SonarQube organization in SonarCloud. For hosted SonarQube, skip this setting.
+         sonarOrganization: kms-medidata
+         sonarHostName: ${{ secrets.SONAR_HOST_URL_KMS  }}
+    # - name: SonarScanner for .NET 6
+    #   uses: sonarsource/sonarcloud-github-action@master
+    #   with:
+    #     projectKey: medidata
+    #     organization: kms-medidata
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    - name: CodeCov (optional)
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-    - name: dotnet-tests-report (optional)
-      uses: zyborg/dotnet-tests-report@v1.3.0
-      with:
-        project_path: Tests
-        report_name: tests
-        report_title: Tests
-        github_token: ${{ secrets.SONAR_TOKEN }}
+    # - name: CodeCov (optional)
+    #   uses: codecov/codecov-action@v1
+    #   with:
+    #     token: ${{ secrets.CODECOV_TOKEN }}
+    # - name: Test
+    #   run: dotnet test --no-build --verbosity normal
+    # - name: dotnet-tests-report (optional)
+    #   uses: zyborg/dotnet-tests-report@v1.3.0
+    #   with:
+    #     project_path: Tests
+    #     report_name: tests
+    #     report_title: Tests
+    #     github_token: ${{ secrets.SONAR_TOKEN }}
