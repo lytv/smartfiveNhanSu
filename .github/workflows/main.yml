@@ -53,8 +53,10 @@ jobs:
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"medidata" /o:"kms-medidata" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"
         dotnet build --no-restore
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}"
+    - name: List files and directories
+      run: ls
     - name: Build
-      run: dotnet build --no-restore .\a\smartfiveNhanSu\smartfiveNhanSu\Clean-Onion_Architecture.sln
+      run: dotnet build --no-restore \a\smartfiveNhanSu\smartfiveNhanSu\Clean-Onion_Architecture.sln
     - name: SonarScanner for .NET 5 with pull request decoration support
       uses: highbyte/sonarscan-dotnet@2.0
       with:
