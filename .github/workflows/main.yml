@@ -51,11 +51,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
-      shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"medidata" /o:"kms-medidata" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"
+        ./.sonar/scanner/dotnet-sonarscanner begin /k:"medidata" /o:"kms-medidata" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"
         dotnet build --no-restore Clean-Onion_Architecture.sln
-        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}"
+        ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}"
+
     - name: Build (optional)
       run: dotnet build --no-restore Clean-Onion_Architecture.sln
     - name: SonarScanner for .NET 6
