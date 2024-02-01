@@ -63,7 +63,6 @@ jobs:
       with:
         entryPoint: ./.sonar/scanner/dotnet-sonarscanner  # Adjust path if needed
         args: 'begin /k:"$(SONAR_PROJECT_KEY)" /o:"$(SONAR_ORGANIZATION)" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"'
-        projectBaseDir: .  # Assuming your project is at the root
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}
