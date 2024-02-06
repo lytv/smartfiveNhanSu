@@ -49,6 +49,9 @@ jobs:
         echo "Installed paths:"
         echo "$(pwd)/.sonar" 
         ls -R ./.sonar
+    - name: Verify SonarScanner installation
+      run: |
+        ls -la ./.sonar/scanner
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Needed to get PR information, if any
