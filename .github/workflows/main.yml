@@ -66,11 +66,10 @@ jobs:
     - name: List files and directories
       run: ls ./
     - name: SonarScanner for .NET 6
-      uses: sonarsource/sonarcloud-github-action@v1.8  # Specify a version
+      uses: sonarsource/sonarcloud-github-action@v1.8
       with:
-        entryPoint: $(pwd)/.sonar/scanner/dotnet-sonarscanner  # Adjust path if needed
-        args: 'begin /k:"$(SONAR_PROJECT_KEY)" /o:"$(SONAR_ORGANIZATION)" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"'
-        projectBaseDir: .         
+        projectBaseDir: .
+        sonarScannerMode: 'CLI'  # Specify CLI mode for .NET  
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}
