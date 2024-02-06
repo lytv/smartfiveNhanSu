@@ -61,13 +61,14 @@ jobs:
     - name: Build (optional)
       run: dotnet build --no-restore Clean-Onion_Architecture.sln
     - name: List files and directories
-      run: ls ./.sonar/scanner 
+      run: ls ./
     - name: SonarScanner for .NET 6
       uses: sonarsource/sonarcloud-github-action@v1.7  # Specify a version
       with:
         entryPoint: ./dotnet-sonarscanner  # Adjust path if needed
         args: 'begin /k:"$(SONAR_PROJECT_KEY)" /o:"$(SONAR_ORGANIZATION)" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"'
         projectBaseDir: . 
+        run: ls ./
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}
