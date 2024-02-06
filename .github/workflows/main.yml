@@ -75,10 +75,10 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_PROJECT_KEY: medidata
         SONAR_ORGANIZATION: kms-medidata
-    - name: CodeCov (optional)
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+    # - name: CodeCov (optional)
+    #   uses: codecov/codecov-action@v1
+    #   with:
+    #     token: ${{ secrets.CODECOV_TOKEN }}
     # - name: Test
     #   run: dotnet test --no-build --verbosity normal
     # - name: dotnet-tests-report (optional)
