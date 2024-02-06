@@ -46,7 +46,8 @@ jobs:
       run: |
         mkdir -p ./.sonar/scanner  # Create the directory using a Linux-compatible command
         dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner  # Path separator adjusted for Linux
-        echo "Installed paths:" 
+        echo "Installed paths:"
+        echo "$(pwd)/.sonar" 
         ls -R ./.sonar
     - name: Build and analyze
       env:
