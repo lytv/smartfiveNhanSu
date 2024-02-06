@@ -41,17 +41,6 @@ jobs:
         path: .\.sonar\scanner
         key: ${{ runner.os }}-sonar-scanner
         restore-keys: ${{ runner.os }}-sonar-scanner
-    - name: Install SonarCloud scanner
-      if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-      run: |
-        mkdir -p ./.sonar/scanner  # Create the directory using a Linux-compatible command
-        dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner  # Path separator adjusted for Linux
-        echo "Installed paths:"
-        echo "$(pwd)/.sonar" 
-        ls -R ./.sonar
-    - name: Verify SonarScanner installation
-      run: |
-        ls -la ./.sonar/scanner
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Needed to get PR information, if any
@@ -63,8 +52,17 @@ jobs:
 
     - name: Build (optional)
       run: dotnet build --no-restore Clean-Onion_Architecture.sln
-    - name: List files and directories
-      run: ls ./
+    - name: Install SonarCloud scanner
+      if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+      run: |
+        mkdir -p ./.sonar/scanner  # Create the directory using a Linux-compatible command
+        dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner  # Path separator adjusted for Linux
+        echo "Installed paths:"
+        echo "$(pwd)/.sonar" 
+        ls -R ./.sonar
+    - name: Verify SonarScanner installation
+      run: |
+        ls -la ./.sonar/scanner
     - name: SonarScanner for .NET 6
       uses: sonarsource/sonarcloud-github-action@v1.7  # Specify a version
       with:
