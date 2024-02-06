@@ -65,7 +65,7 @@ jobs:
     - name: List files and directories
       run: ls ./
     - name: SonarScanner for .NET 6
-      uses: sonarsource/sonarcloud-github-action@v1.11
+      uses: sonarsource/sonarcloud-github-action@v1.11.0
       with:
         projectBaseDir: .
         sonarScannerMode: 'CLI'  # Specify CLI mode for .NET  
