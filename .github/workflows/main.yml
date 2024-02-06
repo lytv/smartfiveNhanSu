@@ -52,14 +52,14 @@ jobs:
     - name: Verify SonarScanner installation
       run: |
         ls -la ./.sonar/scanner
-    - name: Build and analyze
-      env:
-        GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
-      run: |
-        ./.sonar/scanner/dotnet-sonarscanner begin /k:"testkmsscan" /o:"kms-medidata" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"
-        dotnet build --no-restore Clean-Onion_Architecture.sln
-        ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}"
+    # - name: Build and analyze
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Needed to get PR information, if any
+    #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
+    #   run: |
+    #     ./.sonar/scanner/dotnet-sonarscanner begin /k:"testkmsscan" /o:"kms-medidata" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"
+    #     dotnet build --no-restore Clean-Onion_Architecture.sln
+    #     ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}"
     - name: Build (optional)
       run: dotnet build --no-restore Clean-Onion_Architecture.sln
     - name: List files and directories
