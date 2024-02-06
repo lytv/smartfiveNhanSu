@@ -57,10 +57,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
       run: |
-        ./.sonar/scanner/dotnet-sonarscanner begin /k:"medidata" /o:"kms-medidata" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"
+        ./.sonar/scanner/dotnet-sonarscanner begin /k:"testkmsscan" /o:"kms-medidata" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"
         dotnet build --no-restore Clean-Onion_Architecture.sln
         ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}"
-
     - name: Build (optional)
       run: dotnet build --no-restore Clean-Onion_Architecture.sln
     - name: List files and directories
@@ -73,7 +72,7 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_PROJECT_KEY: medidata
+        SONAR_PROJECT_KEY: testkmsscan
         SONAR_ORGANIZATION: kms-medidata
     # - name: CodeCov (optional)
     #   uses: codecov/codecov-action@v1
