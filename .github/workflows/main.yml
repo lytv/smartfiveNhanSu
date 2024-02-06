@@ -29,14 +29,14 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Cache SonarCloud packages
-      uses: actions/cache@v1.7
+      uses: actions/cache@v1
       with:
         path: ~\sonar\cache
         key: ${{ runner.os }}-sonar
         restore-keys: ${{ runner.os }}-sonar
     - name: Cache SonarCloud scanner
       id: cache-sonar-scanner
-      uses: actions/cache@v1.7
+      uses: actions/cache@v1
       with:
         path: .\.sonar\scanner
         key: ${{ runner.os }}-sonar-scanner
@@ -64,7 +64,7 @@ jobs:
       with:
         entryPoint: ./.sonar/scanner/dotnet-sonarscanner  # Adjust path if needed
         args: 'begin /k:"$(SONAR_PROJECT_KEY)" /o:"$(SONAR_ORGANIZATION)" /d:sonar.login="${{ secrets.SONAR_TOKEN_KMS }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL_KMS }}"'
-        projectBaseDir: .  # Assuming your project is at the root
+        projectBaseDir: . 
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_KMS }}
         GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}
